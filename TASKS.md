@@ -17,8 +17,7 @@
 
 ### Notes
 
-- Take a look at `react-redux` and apply it for state management
-- Take a look at `redux-saga` and apply it in your work
+- Use React Hooks to fetch data and manage states
 - You will need to use `react-router` / `react-router-dom` to set up different routes
 - Feel free to use any CSS frameworks (Bootstrap / Reactstrap / CoreUI / MateiralizeCSS)
 - Use CSS-in-JS libraries (`styled-components` / `emotion` e.t.c.)
@@ -30,5 +29,5 @@
 3. Learn what `SSL certificates` and `HTTPS` are and why they are essential in modern websites
 4. Find the way to redirect your React App from S3 to `AWS Cloudfront` and enable `HTTPS` in Cloudfront
 5. Learn what `CI/CD` means and why we need it
-6. Find the way to set up a `CircleCI` pipeline to build your React app and deploy the production version onto AWS S3
-7. Set up a CircleCI CI/CD pipeline
+6. Find the way to set up a Bitbucket Pipeline to build your React app and deploy the production version onto AWS S3
+7. Investigate in how to set up the AWS infrastructure with Pulumi (IaC)
