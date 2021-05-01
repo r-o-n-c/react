@@ -26,8 +26,7 @@ export const Login = ({ setToken }) => {
                         method: 'POST',
                         body: JSON.stringify(values)
                     })
-                    // .then(Response => setToken(Response.headers.get('authorization')))
-                setToken('123abc456def789ghi');
+                    .then(Response => setToken(Response.headers.get('authorization')))
             }}
         >
             {formik => (

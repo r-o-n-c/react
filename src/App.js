@@ -9,8 +9,8 @@ import {
 } from 'react-router-dom';
 
 //pages
-import users from './pages/users';
 import { Login } from './components/Login';
+import { Users } from './components/Users';
 
 function App() {
   const [token, setToken] = useState();
@@ -20,7 +20,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/users" component={users} />
+        <Route path="/">
+          <Users />
+        </Route>
       </Switch>
     </Router>
   );
