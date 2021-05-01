@@ -2,8 +2,9 @@ import React from 'react'
 import { Formik, Form } from 'formik';
 import { TextField } from './TextField';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 
-export const Login = () => {
+export const Login = ({ setToken }) => {
     const validate = Yup.object({
         email: Yup.string()
         .email('Email is invalid')
@@ -25,18 +26,31 @@ export const Login = () => {
                         method: 'POST',
                         body: JSON.stringify(values)
                     })
+                    // .then(Response => setToken(Response.headers.get('authorization')))
+                setToken('123abc456def789ghi');
             }}
         >
             {formik => (
-                <div>
-                    <h1 className="my-4.font-weight-bold-display-4">Login</h1>
-                    <Form>
-                        <TextField label="Email" name="email" type="email"/>
-                        <TextField label="password" name="password" type="password"/>
-                        <button className="btn btn-dark mt-3" type="submit" disabled={!formik.isValid}>Login</button>
-                    </Form>
+                <div className="container mt-3">
+                    <div className="row">
+                        <div className="col-md-5">
+                            <div>
+                                <h1 className="my-4.font-weight-bold-display-4">Login</h1>
+                                <Form>
+                                    <TextField label="Email" name="email" type="email" />
+                                    <TextField label="password" name="password" type="password" />
+                                    <button className="btn btn-dark mt-3" type="submit" disabled={!formik.isValid}>Login</button>
+                                </Form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             )}
         </Formik>
     )
+}
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
 }
