@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
+import useToken from './components/useToken';
 
 //pages
 import { Login } from './components/Login';
@@ -10,9 +11,9 @@ import { UserEdit } from './components/UserEdit';
 import { UserCreate } from './components/UserCreate';
 
 function App() {
-  const token = localStorage.getItem('token');
+  const { token, setToken } = useToken();
   if (!token) {
-    return <Login />;
+    return <Login setToken={setToken} />;
   }
   return (
     <Router>

@@ -15,7 +15,7 @@ const getData = async (userId, token, callback) => {
 export const UserDetails = () => {
     const { userId } = useParams()
     const [user, setUser] = useState([]);
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     useEffect(() => {
         getData(userId, token, setUser);

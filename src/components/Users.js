@@ -52,7 +52,7 @@ const tableColumns = [
 
 export const Users = () => {
     const [users, setUsers] = useState([]);
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     useEffect(() => {
         getData(token, setUsers);

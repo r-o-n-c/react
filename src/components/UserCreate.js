@@ -33,7 +33,7 @@ const validate = Yup.object({
 })
 
 export const UserCreate = () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const history = useHistory();
 
     return (

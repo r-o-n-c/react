@@ -4,7 +4,7 @@ import { TextField } from './TextField';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 
-export const Login = () => {
+export const Login = ({setToken}) => {
     const validate = Yup.object({
         email: Yup.string().email('Email is invalid').required('Email is required'),
         password: Yup.string()
@@ -23,7 +23,7 @@ export const Login = () => {
                     method: 'POST',
                     body: JSON.stringify(values),
                 }).then((response) => {
-                    localStorage.setItem('token', response.headers.get('authorization'));
+                    setToken(response.headers.get('authorization'))
                 });
             }}
         >
