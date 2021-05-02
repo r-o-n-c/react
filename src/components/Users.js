@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useTable } from 'react-table';
+import { useTable, usePagination } from 'react-table';
 import { boolean } from 'yup/lib/locale';
 
 const getData = async (token, callback) => {
@@ -59,8 +59,23 @@ export const Users = () => {
     const columns = useMemo(() => [...tableColumns], []);
     // console.log(columns);
 
-    const tableInstance = useTable({ columns, data });
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
+    const tableInstance = useTable({ columns, data }, usePagination);
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        page,
+        nextPage,
+        previousPage,
+        canNextPage,
+        canPreviousPage,
+        pageOptions,
+        state,
+        setPageSize,
+        prepareRow 
+    } = tableInstance;
+    const { pageIndex, pageSize } = state;
+    
     return (
         <div>
             <h1>user index</h1>
@@ -76,7 +91,7 @@ export const Users = () => {
                     ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                    {rows.map((row) => {
+                    {page.map((row) => {
                         prepareRow(row);
                         return (
                             <tr {...row.getRowProps()}>
@@ -91,6 +106,22 @@ export const Users = () => {
                     })}
                 </tbody>
             </table>
+            <div>
+                <button onClick={previousPage} disabled={!canPreviousPage}>{'<<'}</button>
+                <span> Page <strong>{pageIndex + 1} of {pageOptions.length} </strong></span>
+                <button onClick={nextPage} disabled={!canNextPage}>{'>>'}</button>
+                <span> Page size: </span>
+                <span>
+                    <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
+                        {
+                            [3, 5, 10].map((pageSize) => (
+                                <option key={pageSize} value={pageSize}>
+                                    {pageSize}
+                                </option>
+                            ))}
+                    </select>
+                </span>
+            </div>
         </div>
     );
 };
