@@ -51,6 +51,7 @@ export const Users = () => {
         getData(token, setUsers);
     }, [token]);
 
+    // localStorage.clear(); // for testing purpose
     // console.log(users);
 
     const data = useMemo(() => [...users], [users]);

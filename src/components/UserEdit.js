@@ -22,11 +22,19 @@ export const UserEdit = () => {
     useEffect(() => {
         getData(userId, token, setUser);
     }, [token]);
-
+    console.log(user)
     return (
         <Formik
+            initialValues={{
+                email: '',
+                first_name: '',
+                last_name: '',
+                jobs_count: '',
+                active: '',
+                slack_username: ''
+            }}
             onSubmit={(values) => {
-                console.log(JSON.stringify(values))
+                
             }}
         >
             {(formik) => (
@@ -52,5 +60,5 @@ export const UserEdit = () => {
             </div>
             )}
         </Formik>
-    )
+    );
 }
