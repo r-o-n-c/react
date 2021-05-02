@@ -40,12 +40,12 @@ export const Users = () => {
         getData(token, setUsers);
     }, [token]);
 
-    console.log(users);
+    // console.log(users);
 
     const data = useMemo(() => [...users], [users]);
-    console.log(data);
+    // console.log(data);
     const columns = useMemo(() => [...tableColumns], []);
-    console.log(columns);
+    // console.log(columns);
 
     const tableInstance = useTable({ columns, data });
     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
