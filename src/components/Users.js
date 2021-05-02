@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { useTable, usePagination } from 'react-table';
+import { useTable, usePagination, useFilters } from 'react-table';
 import { boolean } from 'yup/lib/locale';
+import { ColumnFilter } from './ColumnFilter';
 
 const getData = async (token, callback) => {
     const Response = await fetch('/api/v2/users', {
@@ -28,18 +29,24 @@ const tableColumns = [
     {
         Header: 'ID',
         accessor: 'id',
+        Filter: ColumnFilter,
+        disableFilters: true
     },
     {
         Header: 'Email',
         accessor: 'email',
+        Filter: ColumnFilter
     },
     {
         Header: 'Jobs Count',
         accessor: 'jobs_count',
+        Filter: ColumnFilter,
+        disableFilters: true
     },
     {
         Header: 'Active',
         accessor: 'active',
+        Filter: ColumnFilter
     },
 ];
 
@@ -59,7 +66,7 @@ export const Users = () => {
     const columns = useMemo(() => [...tableColumns], []);
     // console.log(columns);
 
-    const tableInstance = useTable({ columns, data }, usePagination);
+    const tableInstance = useTable({ columns, data }, useFilters, usePagination );
     const {
         getTableProps,
         getTableBodyProps,
@@ -85,7 +92,8 @@ export const Users = () => {
                     {headerGroups.map((headerGroup) => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                <th {...column.getHeaderProps()}>{column.render('Header')}
+                                <span>{column.canFilter ? column.render('Filter') : null}</span></th>
                             ))}
                         </tr>
                     ))}
