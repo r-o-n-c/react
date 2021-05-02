@@ -1,102 +1,79 @@
-import React, { useState, useMemo } from 'react'
-import { Formik } from 'formik';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTable } from 'react-table';
 
+const getData = async (token, callback) => {
+  const Response = await fetch('/api/v2/users', {
+    method: 'GET',
+    headers: {
+      Authorization: token,
+    },
+  });
+  const data = await Response.json();
+  callback(data.users);
+};
+
+const tableColumns = [
+  {
+    Header: 'ID',
+    accessor: 'id',
+  },
+  {
+    Header: 'Email',
+    accessor: 'email',
+  },
+  {
+    Header: 'Jobs Count',
+    accessor: 'jobs_count',
+  },
+  {
+    Header: 'Active',
+    accessor: 'active',
+  },
+];
+
 export const Users = () => {
-    const token = '123abc456def789ghi'; //temporary
-    const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
+  const token = localStorage.getItem('token');
 
-    const getData = async () => {
-        const Response = await fetch('/api/v2/users',
-            {
-                method: 'GET',
-                headers: {
-                    Authorization: token
-                }
-            })
-        const data = await Response.json();
-        setUsers(data.users)
-    }
-    getData();
+  useEffect(() => {
+    getData(token, setUsers);
+  }, [token]);
 
-    table
-    const Columns = [
-        {
-            Header: 'ID',
-            accessor: 'id'
-        },
-        {
-            Header: 'Email',
-            accessor: 'email'
-        },
-        {
-            Header: 'Jobs Count',
-            accessor: 'jobs_count'
-        },
-        {
-            Header: 'Active',
-            accessor: 'active'
-        }
-    ]
+  console.log(users);
 
-    const columns = useMemo(() => Columns, [])
-    const data = useMemo(() => users, [])
+  const data = useMemo(() => [...users], [users]);
+  console.log(data);
+  const columns = useMemo(() => [...tableColumns], []);
+  console.log(columns);
 
-    // console.log("users", users)
-    // console.log("data", data)
-
-    const tableInstance = useTable({
-        columns,
-        data
-    })
-
-    const { 
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow
-    } = tableInstance
-
-    return (
-        <table {...getTableProps()}>
-            <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
-                        </tr>
-                    )
+  const tableInstance = useTable({ columns, data });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
+  return (
+    <div>
+      <h1>user index</h1>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                 })}
-            </tbody>
-        </table>
-    )
-    //table
-    // return (
-    //     <div>
-    //         <Formik>
-    //             {formik => (
-    //                 <div className="container mt-3">
-    //                     <div className="row">
-    //                         <div className="col-md-5">
-    //                             {JSON.stringify(users)}
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             )}
-    //         </Formik>
-    //     </div>
-    // )
-}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+};
