@@ -7,6 +7,7 @@ import { Login } from './components/Login';
 import { Users } from './components/Users';
 import { UserDetails } from './components/UserDetails';
 import { UserEdit } from './components/UserEdit';
+import { UserCreate } from './components/UserCreate';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route path="/userEdit/:userId">
           <UserEdit />
+        </Route>
+        <Route path="/userCreate">
+          <UserCreate />
         </Route>
       </Switch>
     </Router>

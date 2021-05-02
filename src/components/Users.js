@@ -64,6 +64,7 @@ export const Users = () => {
     return (
         <div>
             <h1>user index</h1>
+            <Link to='/userCreate'>Create a user</Link>
             <table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup) => (

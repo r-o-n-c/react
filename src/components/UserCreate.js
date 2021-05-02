@@ -1,23 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from "react-router-dom"
+import React from 'react';
+import { useHistory } from "react-router-dom"
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { TextField } from './TextField';
 
-const getData = async (userId, token, callback) => {
-    const Response = await fetch(`/api/v2/users/${userId}`, {
-        method: 'GET',
-        headers: {
-            Authorization: token,
-        },
-    });
-    const data = await Response.json();
-    callback(data.users);
-};
-
-const updateData = async (userId, body, token) => {
-    await fetch(`/api/v2/users/${userId}`, {
-        method: 'PATCH',
+const addData = async (body, token) => {
+    await fetch('/api/v2/users', {
+        method: 'POST',
         headers: {
             Authorization: token,
         },
@@ -43,16 +32,10 @@ const validate = Yup.object({
     slack_username: Yup.string()
 })
 
-export const UserEdit = () => {
-    const { userId } = useParams()
-    const [user, setUser] = useState([]);
+export const UserCreate = () => {
     const token = localStorage.getItem('token');
     const history = useHistory();
 
-    useEffect(() => {
-        getData(userId, token, setUser);
-    }, [token]);
-    
     return (
         <Formik
             initialValues={{
@@ -65,7 +48,7 @@ export const UserEdit = () => {
             }}
             validationSchema={validate}
             onSubmit={(values) => {
-                updateData(userId, values, token);
+                addData(values, token);
                 history.push('/')
             }}
         >
@@ -76,12 +59,12 @@ export const UserEdit = () => {
                         <div>
                             <h1 className="my-4.font-weight-bold-display-4">Edit User</h1>
                             <Form>
-                                <TextField label="Email" placeholder={user.email} name="email" type="email" />
-                                <TextField label="First name" placeholder={user.first_name} name="first_name" type="text" />
-                                <TextField label="Last name" placeholder={user.last_name} name="last_name" type="text" />
-                                <TextField label="Jobs count" placeholder={user.jobs_count} name="jobs_count" type="text" />
-                                <TextField label="Active" placeholder={`${user.active}`} name="active" type="text" />
-                                <TextField label="Slack username" placeholder={user.slack_username} name="slack_username" type="text" />
+                                <TextField label="Email" placeholder="example@example.com" name="email" type="email" />
+                                <TextField label="First name" placeholder="John" name="first_name" type="text" />
+                                <TextField label="Last name" placeholder="Smith" name="last_name" type="text" />
+                                <TextField label="Jobs count" placeholder="5" name="jobs_count" type="text" />
+                                <TextField label="Active" placeholder="true" name="active" type="text" />
+                                <TextField label="Slack username" placeholder="JohnAtSlack" name="slack_username" type="text" />
                                 <button className="btn btn-dark mt-3" type="submit" disabled={!formik.isValid}>
                                     Save
               </button>
