@@ -13,6 +13,16 @@ const getData = async (token, callback) => {
     callback(data.users);
 };
 
+const deleteData = async (userId, token, callback, setUsers) => {
+    const Response = await fetch(`/api/v2/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: token,
+        },
+    });
+    callback(token, setUsers);
+};
+
 const tableColumns = [
     {
         Header: 'ID',
@@ -70,7 +80,9 @@ export const Users = () => {
                                 {row.cells.map((cell) => {
                                     return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
                                 })}
-                            <Link to={`/userDetails/${row.allCells[0].value}`}>view</Link>
+                            <Link to={`/userDetails/${row.allCells[0].value}`}> View </Link>
+                            <Link to={`/userDetails/${row.allCells[0].value}`}> Edit </Link>
+                            <Link onClick={() => deleteData(row.allCells[0].value, token, getData, setUsers)}> Delete </Link>
                             </tr>
                         );
                     })}
