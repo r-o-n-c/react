@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-ro
 //pages
 import { Login } from './components/Login';
 import { Users } from './components/Users';
+import { UserDetails } from './components/UserDetails';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -14,8 +15,11 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <Users />
+        </Route>
+        <Route path="/userDetails/:userId">
+          <UserDetails />
         </Route>
       </Switch>
     </Router>
