@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-ro
 import { Login } from './components/Login';
 import { Users } from './components/Users';
 import { UserDetails } from './components/UserDetails';
+import { UserEdit } from './components/UserEdit';
 
 function App() {
   const token = localStorage.getItem('token');
@@ -20,6 +21,9 @@ function App() {
         </Route>
         <Route path="/userDetails/:userId">
           <UserDetails />
+        </Route>
+        <Route path="/userEdit/:userId">
+          <UserEdit />
         </Route>
       </Switch>
     </Router>

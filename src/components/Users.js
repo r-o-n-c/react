@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTable } from 'react-table';
+import { boolean } from 'yup/lib/locale';
 
 const getData = async (token, callback) => {
     const Response = await fetch('/api/v2/users', {
@@ -78,10 +79,10 @@ export const Users = () => {
                         return (
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell) => {
-                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                                    return <td {...cell.getCellProps()}>{typeof(cell.value) === 'boolean' ? `${cell.value}` : cell.render('Cell')}</td>;
                                 })}
                             <Link to={`/userDetails/${row.allCells[0].value}`}> View </Link>
-                            <Link to={`/userDetails/${row.allCells[0].value}`}> Edit </Link>
+                            <Link to={`/userEdit/${row.allCells[0].value}`}> Edit </Link>
                             <Link onClick={() => deleteData(row.allCells[0].value, token, getData, setUsers)}> Delete </Link>
                             </tr>
                         );

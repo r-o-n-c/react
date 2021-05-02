@@ -28,7 +28,7 @@ export const UserDetails = () => {
             <p>First name: {user.first_name}</p>
             <p>Last name: {user.last_name}</p>
             <p>Jobs count: {user.jobs_count}</p>
-            <p>Active: {user.active}</p>
+            <p>Active: {`${user.active}`}</p>
             <p>Slack username: {user.slack_username}</p>
         </div>
     )
