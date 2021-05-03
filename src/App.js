@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from 'react-router-dom';
 import useToken from './components/useToken';
+import './components/table.css';
 
 //pages
 import { Login } from './components/Login';

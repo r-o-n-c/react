@@ -58,13 +58,8 @@ export const Users = () => {
         getData(token, setUsers);
     }, [token]);
 
-    // localStorage.clear(); // for testing purpose
-    // console.log(users);
-
     const data = useMemo(() => [...users], [users]);
-    // console.log(data);
     const columns = useMemo(() => [...tableColumns], []);
-    // console.log(columns);
 
     const tableInstance = useTable({ columns, data }, useFilters, usePagination );
     const {
@@ -86,7 +81,6 @@ export const Users = () => {
     return (
         <div>
             <h1>user index</h1>
-            <Link to='/userCreate'>Create a user</Link>
             <table {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup) => (
@@ -95,6 +89,7 @@ export const Users = () => {
                                 <th {...column.getHeaderProps()}>{column.render('Header')}
                                 <span>{column.canFilter ? column.render('Filter') : null}</span></th>
                             ))}
+                            <th/><th/><th/>
                         </tr>
                     ))}
                 </thead>
@@ -106,9 +101,9 @@ export const Users = () => {
                                 {row.cells.map((cell) => {
                                     return <td {...cell.getCellProps()}>{typeof(cell.value) === 'boolean' ? `${cell.value}` : cell.render('Cell')}</td>;
                                 })}
-                            <Link to={`/userDetails/${row.allCells[0].value}`}> View </Link>
-                            <Link to={`/userEdit/${row.allCells[0].value}`}> Edit </Link>
-                            <Link onClick={() => deleteData(row.allCells[0].value, token, getData, setUsers)}> Delete </Link>
+                            <td><Link to={`/userDetails/${row.allCells[0].value}`}> View </Link></td>
+                            <td><Link to={`/userEdit/${row.allCells[0].value}`}> Edit </Link></td>
+                            <td><Link onClick={() => deleteData(row.allCells[0].value, token, getData, setUsers)}> Delete </Link></td>
                             </tr>
                         );
                     })}
@@ -118,6 +113,8 @@ export const Users = () => {
                 <button onClick={previousPage} disabled={!canPreviousPage}>{'<<'}</button>
                 <span> Page <strong>{pageIndex + 1} of {pageOptions.length} </strong></span>
                 <button onClick={nextPage} disabled={!canNextPage}>{'>>'}</button>
+            </div>
+            <div>
                 <span> Page size: </span>
                 <span>
                     <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
@@ -130,6 +127,7 @@ export const Users = () => {
                     </select>
                 </span>
             </div>
+            <div><Link to='/userCreate'>Create a user</Link></div>
         </div>
     );
 };
