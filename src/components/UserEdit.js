@@ -46,7 +46,7 @@ const validate = Yup.object({
 export const UserEdit = () => {
     const { userId } = useParams()
     const [user, setUser] = useState([]);
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     const history = useHistory();
 
     useEffect(() => {
